@@ -1,12 +1,12 @@
 from app import db
 
-class Toit(db.Model):
-    __tablename__= 'Retseptid'
+class Retsept(db.Model):
+    __tablename__= 'retseptid'
 
     pid= db.Column(db.Integer, primary_key= True)
-    toidunimi= db.Column(db.Text, nullable= False)
-    kirjeldus= db.Coulmn(db.Text)
-    aeg= db.Column(db. Integer)
+    toit= db.Column(db.Text, nullable= False)
+    juhend= db.Column(db.Text)
+    aeg= db.Column(db. Text)
 
     def __repr__(self):
-        return f'Retsept {self.toidumini}, valmista nii: {self.kirjeldus}'
+        return f'Toit: {self.toit}. Valmistamine: {self.juhend}' 

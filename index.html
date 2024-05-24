@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retseptid List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minu retseptid</h1>
+    <form action="/add" method="post">
+        <input type="text" name="toit" placeholder="Toidu nimi" required>
+        <input type="text" name="juhend" placeholder="Valmistamise juhend">
+        <input type="text" name="aeg" placeholder="Valmistamiseks kuluv aeg">
+        <button type="submit">Add Retsept</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Toit</th>
+                <th style="width: 30%;">Juhend</th>
+                <th>Aeg</th>
+                <th>Kustutamine</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for retsept in retseptid %}
+                <tr>
+                    <td>{{ retsept.toit }}</td>
+                    <td style="width: 30%;">{{ retsept.juhend }}</td>
+                    <td>{{ retsept.aeg }}</td>
+                    <td>
+                        <form action="/delete/{{ retsept.pid }}" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
