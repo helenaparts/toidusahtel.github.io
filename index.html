@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retseptid List</title>
+    <title>Minu retseptid</title>
     <style>
         table {
             width: 100%;
@@ -22,29 +22,35 @@
 <body>
     <h1>Minu retseptid</h1>
     <form action="/add" method="post">
-        <input type="text" name="toit" placeholder="Toidu nimi" required>
-        <input type="text" name="juhend" placeholder="Valmistamise juhend">
-        <input type="text" name="aeg" placeholder="Valmistamiseks kuluv aeg">
-        <button type="submit">Add Retsept</button>
+        <input type="text" name="toit" placeholder="Toit" required>
+        <input type="text" name="juhend" placeholder="Juhend">
+        <input type="text" name="aeg" placeholder="Aeg">
+        <button type="submit">Lisa retsept</button>
     </form>
+
+    <form action="/" method="get">
+        <input type="text" name="search" placeholder="Search" value="{{ search_query }}">
+        <button type="submit">Otsi retsepti</button>
+    </form>
+
     <table>
         <thead>
             <tr>
-                <th>Toit</th>
-                <th style="width: 30%;">Juhend</th>
-                <th>Aeg</th>
-                <th>Kustutamine</th>
+                <th style="width: 20%;">Toidu nimi</th>
+                <th style="width: 50%;">Valmistamise juhend</th>
+                <th style="width: 8%;"> Kuluv aeg</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             {% for retsept in retseptid %}
                 <tr>
                     <td>{{ retsept.toit }}</td>
-                    <td style="width: 30%;">{{ retsept.juhend }}</td>
+                    <td style="width: 40%;">{{ retsept.juhend }}</td>
                     <td>{{ retsept.aeg }}</td>
                     <td>
                         <form action="/delete/{{ retsept.pid }}" method="post">
-                            <button type="submit">Delete</button>
+                            <button type="submit">Kustuta</button>
                         </form>
                     </td>
                 </tr>

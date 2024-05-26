@@ -1,13 +1,19 @@
 from flask import render_template, request, redirect, url_for
-
 from models import Retsept
 
 def register_routes(app, db):
 
     @app.route('/')
     def index():
-        retseptid= Retsept.query.all()
-        return render_template('index.html', retseptid=retseptid)
+        search_query = request.args.get('search', '')
+        if search_query:
+            retseptid = Retsept.query.filter(
+                (Retsept.toit.like(f'%{search_query}%')) |
+                (Retsept.juhend.like(f'%{search_query}%'))
+            ).all()
+        else:
+            retseptid = Retsept.query.all()
+        return render_template('index.html', retseptid=retseptid, search_query=search_query)
     
     @app.route('/add', methods=['POST'])
     def add_retsept():
@@ -20,7 +26,7 @@ def register_routes(app, db):
         db.session.commit()
         
         return redirect(url_for('index'))
-    
+
     @app.route('/delete/<int:retsept_id>', methods=['POST'])
     def delete_retsept(retsept_id):
         retsept = Retsept.query.get_or_404(retsept_id)
