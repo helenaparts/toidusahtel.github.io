@@ -33,3 +33,11 @@ def register_routes(app, db):
         db.session.delete(retsept)
         db.session.commit()
         return redirect(url_for('index'))
+    
+    @app.route('/favorite/<int:retsept_id>', methods=['POST'])
+    def favorite_retsept(retsept_id):
+        db.session.query(Retsept).update({Retsept.favorite: False})
+        retsept = Retsept.query.get_or_404(retsept_id)
+        retsept.favorite = True
+        db.session.commit()
+        return redirect(url_for('index'))
